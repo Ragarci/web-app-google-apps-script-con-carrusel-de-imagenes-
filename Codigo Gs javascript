@@ -1,0 +1,53 @@
+//Funcion para realizar saltos de pagina.
+ 
+ var rutaWeb = ScriptApp.getService().getUrl();
+ 
+  function doGet(e) {    
+   var page = e.parameter.p || "index";
+   return HtmlService.createTemplateFromFile(page).evaluate();
+ }
+
+
+
+
+
+// Funcion que realiza el envio del formulario al sheet Comentarios.
+function processForm(formObject){
+
+  var url = "https://docs.google.com/spreadsheets/d/1W42-00eWLfodmKSL_8pff4RS0uqNzrc2jPQfXSEbUk8/edit#gid=0"; // ID del sheet 
+  var ss  = SpreadsheetApp.openByUrl(url);
+  var ws  = ss.getSheetByName("Comentarios");// Nombre del sheet que recibe el formulario 
+
+// Se agregan los nombres de los input del formulario "Solicitar".
+    ws.appendRow([
+      formObject.dato,      
+      formObject.nombre,
+      formObject.correo,   
+      formObject.areas,    
+      formObject.comentario,
+         
+    
+    ]);
+
+
+}
+
+
+
+
+
+ 
+////////////////   ENVIA PDF POR EMAIL ////////////////////////
+
+
+/*
+// Send an email with two attachments: a file from Google Drive (as a PDF) and an HTML file.
+//Envio de correo automatico en formato pdf 
+var file = DriveApp.getFileById('1W42-00eWLfodmKSL_8pff4RS0uqNzrc2jPQfXSEbUk8');
+
+GmailApp.sendEmail('bp_luisangel_ramirez@colpal.com', 'Pagina maestra de Formularios', 'Correo con adjunto pdf enviado', {
+    name: 'Automatic Emailer Script',
+    attachments: [file.getAs(MimeType.PDF)]
+});
+
+*/
